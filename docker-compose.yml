@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  lacqr:
+    image: lacqr
+    build:
+      context: .
+      dockerfile: Lacqr\Dockerfile
