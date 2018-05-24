@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Accounts.API.Models.Web;
 using Accounts.API.Interfaces;
+using System;
 
 namespace Accounts.API.Services.Web
 {
@@ -12,15 +13,18 @@ namespace Accounts.API.Services.Web
 
         public override IWebUser Register(IAccountRegistration creds)
         {
-            var user = new WebUser(_provider.Register(creds));
+            var auth = _provider.Register(creds);
+            if (auth == null) { throw new Exception("Invalid Credentials"); }
+            var user = new WebUser(auth);
             user.SetClaims();
             return user;
         }
 
         public override IWebUser Login(IAccountLogin creds)
         {
-            var user = new WebUser(_provider.Login(creds));
-            if (user == null) { return null; }
+            var auth = _provider.Login(creds);
+            if(auth == null) { throw new Exception("Invalid Credentials"); }
+            var user = new WebUser(auth);
             user.SetClaims();
             return user;
         }
@@ -30,7 +34,7 @@ namespace Accounts.API.Services.Web
             var ctxUser = ctx.User;
             var id = ctxUser.Identity.Name;
             var user = new WebUser(_provider.GetUserById(id));
-            if (user == null) { return null; }
+            if (user == null) { throw new Exception("Not Authorized"); }
             user.SetClaims();
             return user;
         }

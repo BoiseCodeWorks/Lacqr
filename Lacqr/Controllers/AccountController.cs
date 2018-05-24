@@ -6,6 +6,7 @@ using Accounts.API.Models.Web;
 using Accounts.API.Services.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Lacqr.Controllers
 {
