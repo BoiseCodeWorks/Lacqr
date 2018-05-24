@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Accounts.API.Interfaces;
 using Accounts.API.Models;
-using Accounts.API.Services;
-using Accounts.Data.Interfaces;
+using Accounts.API.Models.Web;
+using Accounts.API.Services.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,40 +12,42 @@ namespace Lacqr.Controllers
     [Route("[controller]")]
     public class AccountController : Controller
     {
-        private AccountsManager _manager;
+        private AccountsManagerWeb _manager;
 
-        public AccountController(AccountsManager m)
+        public AccountController(AccountsManagerWeb m)
         {
             _manager = m;
         }
 
         [HttpPost("register")]
-        public IWebUser Register([FromBody]AccountRegistration creds)
+        public async Task<IWebUser> Register([FromBody]AccountRegistration creds)
         {
             if (ModelState.IsValid)
             {
                 IWebUser user = _manager.Register(creds);
                 if (user != null)
                 {
+                    await SetUserSession(user);
                     return user;
-                    //return await SetUserSession(user);
                 }
             }
             throw new Exception("Invalid Credentials");
         }
 
         [HttpPost("login")]
-        public async Task<IWebUser> Login([FromBody]IAccountLogin creds)
+        public async Task<IWebUser> Login([FromBody]AccountLogin creds)
         {
             if (ModelState.IsValid)
             {
                 IWebUser user = _manager.Login(creds);
                 if (user != null)
                 {
-                    return await SetUserSession(user);
+                    await SetUserSession(user);
+                    return user;
+                    
                 }
             }
-            return null;
+            throw new Exception("Invalid Credentials");
         }
 
         [HttpGet("authenticate")]
@@ -58,7 +58,7 @@ namespace Lacqr.Controllers
 
         private async Task<IWebUser> SetUserSession(IWebUser user)
         {
-            await HttpContext.SignInAsync(user.Principal);
+            await HttpContext.SignInAsync(user.GetPrincipal());
             return user;
         }
     }

@@ -1,19 +1,17 @@
 ﻿using Accounts.API.Interfaces;
 using Accounts.Data.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 
-namespace Accounts.API.Models
+namespace Accounts.API.Models.Web
 {
-    class WebUser : IWebUser
+    internal class WebUser : IWebUser
     {
         public string Id { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public bool AccountConfirmed { get; set; }
-        public ClaimsPrincipal Principal { get; set; }
+        internal ClaimsPrincipal Principal { get; set; }
 
         public WebUser(IUser u)
         {
@@ -32,6 +30,11 @@ namespace Accounts.API.Models
             var userIdentity = new ClaimsIdentity(claims, "login");
             ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
             Principal = principal;
+        }
+
+        public ClaimsPrincipal GetPrincipal()
+        {
+            return Principal;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace Accounts.API.Interfaces
 {
     public interface IWebUser : IUser
     {
-        ClaimsPrincipal Principal { get; set; }
+        ClaimsPrincipal GetPrincipal();
     }
 }

@@ -22,27 +22,28 @@ namespace Accounts.Data.Repositories
             //sql
             try
             {
-                string id = _db.ExecuteScalar<string>(@"
+                string Id = Guid.NewGuid().ToString();
+                int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO users (Id, Email, Password)
                 VALUES (@Id, @Email, @Password);
                 SELECT LAST_INSERT_ID();
             ", new
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id,
                     creds.Email,
                     creds.Password
                 });
 
                 return new User()
                 {
-                    Id = id,
+                    Id = Id,
                     Username = creds.Username,
                     Email = creds.Email
                 };
             }
             catch (MySqlException e)
             {
-                throw new Exception("ERROR: " + e.Message);
+                throw e;
             }
         }
 
