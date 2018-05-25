@@ -12,5 +12,7 @@
     <None Remove="Integration.API\obj\Integration.API.csproj.nuget.g.props" />
     <None Remove="Integration.API\obj\Integration.API.csproj.nuget.g.targets" />
     <None Remove="Integration.API\obj\project.assets.json" />
+    <None Remove="Integration.API\obj\Integrations.API.csproj.nuget.g.props" />
+    <None Remove="Integration.API\obj\Integrations.API.csproj.nuget.cache" />
   </ItemGroup>
 </Project>
