@@ -9,13 +9,13 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountsDomain", "AccountsDomain", "{662FB58A-0700-4192-982F-F89E4E2241EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.Data", "Accounts.Data\Accounts.Data.csproj", "{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Data", "Accounts.Data\Accounts.Data.csproj", "{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.API", "Accounts.API\Accounts.API.csproj", "{11A01439-EC34-4ACF-BC5B-9835C638EAEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.API", "Accounts.API\Accounts.API.csproj", "{11A01439-EC34-4ACF-BC5B-9835C638EAEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ChannelsDomain", "ChannelsDomain", "{24921E0D-A4D5-4DF5-935D-F38D34D1F542}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Channels.API", "Channels.API\Channels.API.csproj", "{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Channels.API", "Channels.API\Channels.API.csproj", "{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cannels.Data", "Cannels.Data\Cannels.Data.csproj", "{4D78B93F-9CDF-45B8-9B6A-760A55536F93}"
 EndProject
