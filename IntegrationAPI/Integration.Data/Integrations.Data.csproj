@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Integration.API\Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Integration.API\obj\Integration.API.csproj.nuget.cache" />
+    <None Remove="Integration.API\obj\Integration.API.csproj.nuget.g.props" />
+    <None Remove="Integration.API\obj\Integration.API.csproj.nuget.g.targets" />
+    <None Remove="Integration.API\obj\project.assets.json" />
+  </ItemGroup>
+</Project>
