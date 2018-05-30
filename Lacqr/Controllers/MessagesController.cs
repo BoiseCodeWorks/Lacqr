@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Messages.API.Models;
+using Messages.API.Services.Web;
 
 namespace Lacqr.Controllers
 {
