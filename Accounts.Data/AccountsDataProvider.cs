@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Accounts.Data
 {
-    public sealed class AccountsDataProvider
+    public class AccountsDataProvider
     {
         internal AccountsRepository _repo;
         public AccountsDataProvider(string connectionString)

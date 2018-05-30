@@ -46,6 +46,7 @@ namespace Lacqr
                 });
             });
             services.AddTransient<AccountsManagerWeb>();
+            services.AddTransient<MessagesManagerWeb>();
             services.AddMvc();
         }
 
