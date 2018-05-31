@@ -15,26 +15,28 @@ namespace Messages.Data.Repositories
         {
 
         }
-        internal IMessage Create(IMessage creds)
+        internal IMessage Create(INewMessage m)
         {
             try
             {
                 string Id = Guid.NewGuid().ToString();
                 int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO messages(Id, UserId, Content)
-                VALUES(@Id, @UserId, @Content);
+                INSERT INTO messages(Id, UserId, Content, RoomId)
+                VALUES(@Id, @UserId, @Content, @RoomId);
                 SELECT LAST_INSERT_ID();
                 ", new
                 {
                     Id,
-                    creds.UserId,
-                    creds.Content
+                    m.UserId,
+                    m.Content,
+                    m.RoomId
                 });
                 return new Message()
                 {
                     Id = Id,
-                    UserId = creds.UserId,
-                    Content = creds.Content
+                    UserId = m.UserId,
+                    Content = m.Content,
+                    RoomId = m.RoomId
                 };
             }
             catch (MySqlException e)

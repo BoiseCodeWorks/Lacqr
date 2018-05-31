@@ -12,9 +12,9 @@ namespace Messages.Data
             var x = new DbConnectionOptions();
             _repo = new MessagesRepository(x.GetMySqlConnection(connectionString));
         }
-        public IMessage Create(IMessage creds)
+        public IMessage Create(INewMessage m)
         {
-            return _repo.Create(creds);
+            return _repo.Create(m);
         }
 
     }

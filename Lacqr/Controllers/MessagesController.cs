@@ -6,18 +6,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Messages.API.Models;
 using Messages.API.Services.Web;
+using Messages.API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Accounts.API.Services.Web;
 
 namespace Lacqr.Controllers
 {
     // [Produces("application/json")]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MessagesController : Controller
     {
         private MessagesManagerWeb _manager;
+        private AccountsManagerWeb _auth;
 
-        public MessagesController(MessagesManagerWeb m)
+        public MessagesController(MessagesManagerWeb m, AccountsManagerWeb a)
         {
             _manager = m;
+            _auth = a;
         }
         // GET: api/Messages
         [HttpGet]
@@ -34,10 +39,21 @@ namespace Lacqr.Controllers
         }
         
         // POST: api/Messages
+        [Authorize]
         [HttpPost]
-        public void Post([FromBody]NewMessage value)
+        public IWebMessage Post([FromBody]NewMessage msg)
         {
-           
+            msg.UserId = _auth.Authenticate(HttpContext).Id;
+            if (ModelState.IsValid)
+            {
+                //Message object is good:
+                IWebMessage message = _manager.Create(msg);
+                if (message != null)
+                {
+                    return message;
+                }
+            }
+            throw new Exception("Invalid Message Data - ARGH");
         }
         
         // PUT: api/Messages/5

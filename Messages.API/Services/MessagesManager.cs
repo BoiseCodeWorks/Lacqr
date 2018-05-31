@@ -9,7 +9,7 @@ namespace Messages.API.Services
 {
     internal interface IMessagesManager<T>
     {
-        T Create(IMessage creds);
+        T Create(INewMessage m);
     }
 
     public abstract class MessagesManager<T> : IMessagesManager<T>
@@ -20,7 +20,7 @@ namespace Messages.API.Services
         {
             _provider = new MessagesDataProvider(connectionString);
         }
-        public virtual T Create(IMessage creds)
+        public virtual T Create(INewMessage m)
         {
             throw new NotImplementedException();
         }
