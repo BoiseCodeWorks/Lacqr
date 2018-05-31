@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cannels.Data
+namespace Channels.Data
 {
     public class Class1
     {

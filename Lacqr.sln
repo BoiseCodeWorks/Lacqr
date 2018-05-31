@@ -3,21 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lacqr", "Lacqr\Lacqr.csproj", "{B3F96635-6323-4146-B787-6658E765C9BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lacqr", "Lacqr\Lacqr.csproj", "{B3F96635-6323-4146-B787-6658E765C9BA}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{AA876EBF-9E79-4F90-8681-8987C427EFC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountsDomain", "AccountsDomain", "{662FB58A-0700-4192-982F-F89E4E2241EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Data", "Accounts.Data\Accounts.Data.csproj", "{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.Data", "Accounts.Data\Accounts.Data.csproj", "{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.API", "Accounts.API\Accounts.API.csproj", "{11A01439-EC34-4ACF-BC5B-9835C638EAEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.API", "Accounts.API\Accounts.API.csproj", "{11A01439-EC34-4ACF-BC5B-9835C638EAEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessagesDomain", "MessagesDomain", "{40DA4920-3E1B-4022-8A11-85CFBC32966E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages.API", "Messages.API\Messages.API.csproj", "{AA4E30DB-8926-4A73-B147-816E4D29B65B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messages.API", "Messages.API\Messages.API.csproj", "{AA4E30DB-8926-4A73-B147-816E4D29B65B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messagas.Data", "Messagas.Data\Messagas.Data.csproj", "{C036B783-6CAF-47AD-B397-B53C538F8F89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messagas.Data", "Messagas.Data\Messagas.Data.csproj", "{C036B783-6CAF-47AD-B397-B53C538F8F89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ChannelsDomain", "ChannelsDomain", "{03AF9F68-A1CC-4472-A362-035D6D2C4F3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Channels.API", "Channels.API\Channels.API.csproj", "{1E4DCFE5-E7A9-4721-813C-70A619EB2962}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Channels.Data", "Cannels.Data\Channels.Data.csproj", "{DF226673-0CB1-4513-A8CC-C8CEA2865024}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +55,14 @@ Global
 		{C036B783-6CAF-47AD-B397-B53C538F8F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C036B783-6CAF-47AD-B397-B53C538F8F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C036B783-6CAF-47AD-B397-B53C538F8F89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E4DCFE5-E7A9-4721-813C-70A619EB2962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4DCFE5-E7A9-4721-813C-70A619EB2962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4DCFE5-E7A9-4721-813C-70A619EB2962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4DCFE5-E7A9-4721-813C-70A619EB2962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF226673-0CB1-4513-A8CC-C8CEA2865024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF226673-0CB1-4513-A8CC-C8CEA2865024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF226673-0CB1-4513-A8CC-C8CEA2865024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF226673-0CB1-4513-A8CC-C8CEA2865024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +72,8 @@ Global
 		{11A01439-EC34-4ACF-BC5B-9835C638EAEE} = {662FB58A-0700-4192-982F-F89E4E2241EA}
 		{AA4E30DB-8926-4A73-B147-816E4D29B65B} = {40DA4920-3E1B-4022-8A11-85CFBC32966E}
 		{C036B783-6CAF-47AD-B397-B53C538F8F89} = {40DA4920-3E1B-4022-8A11-85CFBC32966E}
+		{1E4DCFE5-E7A9-4721-813C-70A619EB2962} = {03AF9F68-A1CC-4472-A362-035D6D2C4F3C}
+		{DF226673-0CB1-4513-A8CC-C8CEA2865024} = {03AF9F68-A1CC-4472-A362-035D6D2C4F3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {117CE731-BFB8-404B-9373-DB2E0634EEAC}
