@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lacqr", "Lacqr\Lacqr.csproj", "{B3F96635-6323-4146-B787-6658E765C9BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lacqr", "Lacqr\Lacqr.csproj", "{B3F96635-6323-4146-B787-6658E765C9BA}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{AA876EBF-9E79-4F90-8681-8987C427EFC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountsDomain", "AccountsDomain", "{662FB58A-0700-4192-982F-F89E4E2241EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.Data", "Accounts.Data\Accounts.Data.csproj", "{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.Data", "Accounts.Data\Accounts.Data.csproj", "{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts.API", "Accounts.API\Accounts.API.csproj", "{11A01439-EC34-4ACF-BC5B-9835C638EAEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.API", "Accounts.API\Accounts.API.csproj", "{11A01439-EC34-4ACF-BC5B-9835C638EAEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ChannelsDomain", "ChannelsDomain", "{24921E0D-A4D5-4DF5-935D-F38D34D1F542}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Channels.API", "Channels.API\Channels.API.csproj", "{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Channels.Data", "Channels.Data\Channels.Data.csproj", "{39D27014-EA82-4A5D-AC38-90BD6D0BDEC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,14 @@ Global
 		{11A01439-EC34-4ACF-BC5B-9835C638EAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A01439-EC34-4ACF-BC5B-9835C638EAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11A01439-EC34-4ACF-BC5B-9835C638EAEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D27014-EA82-4A5D-AC38-90BD6D0BDEC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D27014-EA82-4A5D-AC38-90BD6D0BDEC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D27014-EA82-4A5D-AC38-90BD6D0BDEC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D27014-EA82-4A5D-AC38-90BD6D0BDEC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +56,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D7A3DFBE-554B-42F9-95D4-4C687BFE09E8} = {662FB58A-0700-4192-982F-F89E4E2241EA}
 		{11A01439-EC34-4ACF-BC5B-9835C638EAEE} = {662FB58A-0700-4192-982F-F89E4E2241EA}
+		{D04BC4B7-20D2-436C-A9E6-82A4A79E7C71} = {24921E0D-A4D5-4DF5-935D-F38D34D1F542}
+		{39D27014-EA82-4A5D-AC38-90BD6D0BDEC5} = {24921E0D-A4D5-4DF5-935D-F38D34D1F542}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {117CE731-BFB8-404B-9373-DB2E0634EEAC}
