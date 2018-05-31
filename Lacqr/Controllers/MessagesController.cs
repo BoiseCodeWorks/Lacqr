@@ -26,9 +26,10 @@ namespace Lacqr.Controllers
         }
         // GET: api/Messages
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<IWebMessage> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<IWebMessage> messages = _manager.GetMessages();
+            return messages;
         }
 
         // GET: api/Messages/5

@@ -1,6 +1,7 @@
 ﻿using Messages.Data.Interfaces;
 using Messages.Data.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Messages.Data
 {
@@ -17,5 +18,9 @@ namespace Messages.Data
             return _repo.Create(m);
         }
 
+        public IEnumerable<IMessage> GetMessages()
+        {
+            return _repo.GetMessages();
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Messages.API.Services.Web
 {
     public class MessagesManagerWeb : MessagesManager<IWebMessage>
     {
-        public MessagesManagerWeb() : base("server=localhost;port=3306;database=lacqr;user id=student;password=student")
+        public MessagesManagerWeb() : base("host=192.168.0.9;port=3306;database=lacqr;user id=student;password=student")
         { }
 
         public override IWebMessage Create(INewMessage m)
@@ -20,5 +20,14 @@ namespace Messages.API.Services.Web
             return newWebMessage;
         }
 
+        public List<IWebMessage> GetMessages()
+        {
+            var rawMessages = _provider.GetMessages();
+            List<IWebMessage> messages = new List<IWebMessage>();
+            foreach(var m in rawMessages) {
+                messages.Add(new WebMessage(m));
+            }
+            return messages;
+        }
     }
 }

@@ -3,6 +3,7 @@ using Messages.Data.Interfaces;
 using Messages.Data.Model;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Messages.Data.Repositories
@@ -45,7 +46,15 @@ namespace Messages.Data.Repositories
             }
         }
 
-
-
+        internal List<IMessage> GetMessages()
+        {
+            var rawMessages = _db.Query<List>($@"SELECT * FROM messages");
+            List < IMessage > messages = new List<IMessage>();
+            foreach(var m in rawMessages)
+            {
+                messages.Add(m);
+            }
+            return messages;
+        }
     }
 }
