@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Channels.Data.Models
 {
-    internal abstract class PeerRoom : Room, IPeerRoom
+    internal class PeerRoom : Room, IPeerRoom
     {
     }
 }
