@@ -9,5 +9,6 @@ namespace Messages.Data.Interfaces
         string UserId { get; set; }
         string RoomId { get; set; }
         string Content { get; set; }
+        //string DateTime { get; set; }
     }
 }

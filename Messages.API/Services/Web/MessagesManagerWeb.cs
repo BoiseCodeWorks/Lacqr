@@ -22,9 +22,9 @@ namespace Messages.API.Services.Web
 
         public List<IWebMessage> GetMessages()
         {
-            var rawMessages = _provider.GetMessages();
+            var getMessages = _provider.GetMessages();
             List<IWebMessage> messages = new List<IWebMessage>();
-            foreach (var m in rawMessages)
+            foreach (var m in getMessages)
             {
                 messages.Add(new WebMessage(m));
             }
@@ -33,9 +33,9 @@ namespace Messages.API.Services.Web
 
         public string Delete(string id)
         {
-            var rawMessages = _provider.Delete(id);
+            var deleteMessage = _provider.Delete(id);
             
-            return rawMessages;
+            return deleteMessage;
         }
     }
 }

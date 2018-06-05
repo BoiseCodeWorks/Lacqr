@@ -10,5 +10,6 @@ namespace Messages.API.Models
         public string UserId { get; set; }
         public string RoomId { get; set; }
         public string Content { get; set; }
+        //public string DateTime { get; set; }
     }
 }

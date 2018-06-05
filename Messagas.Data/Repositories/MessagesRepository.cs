@@ -19,6 +19,7 @@ namespace Messages.Data.Repositories
         }
         internal IMessage Create(INewMessage m)
         {
+            //TODO Add DateTime to search and constructor
             try
             {
                 string Id = Guid.NewGuid().ToString();
@@ -32,6 +33,7 @@ namespace Messages.Data.Repositories
                     m.UserId,
                     m.Content,
                     m.RoomId
+                    //m.DateTime
                 });
                 return new Message()
                 {
@@ -39,6 +41,7 @@ namespace Messages.Data.Repositories
                     UserId = m.UserId,
                     Content = m.Content,
                     RoomId = m.RoomId
+                    //DateTime = m.DateTime
                 };
             }
             catch (MySqlException e)
@@ -53,11 +56,12 @@ namespace Messages.Data.Repositories
             return deleteMessage > 0 ? "Succesfully deleted message" : "Nothing Deleted";
         }
 
+        //TODO Date time search and order
         internal List<IMessage> GetMessages()
         {
-            var rawMessages = _db.Query<Message>($@"SELECT * FROM messages");
+            var getMessages = _db.Query<Message>($@"SELECT * FROM messages "); //orderby DateTime 
             List <IMessage> messages = new List<IMessage>();
-            foreach(var m in rawMessages)
+            foreach(var m in getMessages)
             {
                 messages.Add(m);
             }
