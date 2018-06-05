@@ -9,6 +9,5 @@ namespace Channels.Data.Models
         public string Name { get; set; }
         public string OwnerId { get; set; }
         public List<string> Subscribers { get; set; }
-        //public List<Message> Messages { get; set; }
     }
 }

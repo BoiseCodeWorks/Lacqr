@@ -1,4 +1,5 @@
 ﻿using Accounts.API.Services.Web;
+using Channels.API.Services;
 using GlobalExceptionHandler.WebApi;
 using Messages.API.Services.Web;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -48,6 +49,7 @@ namespace Lacqr
             });
             services.AddTransient<AccountsManagerWeb>();
             services.AddTransient<MessagesManagerWeb>();
+            services.AddTransient<ChannelsManager>();
             services.AddMvc();
         }
 

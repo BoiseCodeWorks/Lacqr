@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Accounts.API\Accounts.API.csproj" />
+    <ProjectReference Include="..\Channels.API\Channels.API.csproj" />
     <ProjectReference Include="..\Messages.API\Messages.API.csproj" />
   </ItemGroup>
 

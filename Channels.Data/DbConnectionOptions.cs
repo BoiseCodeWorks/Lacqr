@@ -1,13 +1,13 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using MySql.Data.MySqlClient;
+using System.Data;
 
-namespace Messages.Data
+namespace Channels.Data
 {
     internal class DbConnectionOptions
     {
         internal IDbConnection GetMySqlConnection(string _connectionString)
         {
-            var connection = new SqlConnection(_connectionString);
+            var connection = new MySqlConnection(_connectionString);
             connection.Open();
             return connection;
         }

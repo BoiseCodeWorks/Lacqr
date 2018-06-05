@@ -9,7 +9,7 @@ namespace Channels.Data
         internal RoomsRepository _repo;
         public RoomsDataProvider(string connectionString)
         {
-            var x = new Messages.Data.DbConnectionOptions();
+            var x = new DbConnectionOptions();
             _repo = new RoomsRepository(x.GetMySqlConnection(connectionString));
         }
         public IRoom Create(INewRoom r)

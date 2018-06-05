@@ -15,6 +15,7 @@ namespace Channels.Data.Repositories
         {
 
         }
+
         internal IChannel Create(INewChannel c)
         {
             try
@@ -22,7 +23,7 @@ namespace Channels.Data.Repositories
                 string Id = Guid.NewGuid().ToString();
                 int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO channels(Id, Name, OwnerId)
-                VALUES(@Id, @Name, @OwnerId, @RoomId);
+                VALUES(@Id, @Name, @OwnerId);
                 SELECT LAST_INSERT_ID();
                 ", new
                 {
@@ -41,6 +42,51 @@ namespace Channels.Data.Repositories
             {
                 throw e;
             }
+        }
+
+        internal IChannel GetChannel(ISubscriber sub)
+        {
+            return _db.ExecuteScalar<Channel>(@"
+            SELECT * FROM ChannelSubscribers cs JOIN Channels c
+            ON c.channelId = cs.channelId
+            WHERE cs.userId = @UserId
+            AND cs.channelId = @SubscribableId
+            ", sub);
+        }
+
+        internal IEnumerable<IChannel> GetSubscribedChannels(string userId)
+        {
+            return _db.Query<Channel>(@"
+            SELECT * FROM ChannelSubscribers cs 
+            JOIN Channels c ON c.id = cs.channelId
+            WHERE cs.userId = @userId
+            ", new
+            {
+                userId
+            });
+        }
+
+        internal void Subscribe(ISubscriber subscriber)
+        {
+            string id = Guid.NewGuid().ToString();
+            _db.ExecuteScalar(@"
+            INSERT INTO ChannelSubscribers (Id, ChannelId, UserId)
+            VALUES (@id, @channelId, @userId)
+            ", new
+            {
+                id,
+                channelId = subscriber.SubscribableId,
+                userId = subscriber.UserId
+            });
+        }
+
+        internal void Unsubscribe(ISubscriber subscriber)
+        {
+            _db.ExecuteScalar(@"
+            DELETE FROM ChannelSubscribers
+            WHERE UserId = @UserId
+            AND ChannelId = @SubscribablelId
+            ", subscriber);
         }
 
 
