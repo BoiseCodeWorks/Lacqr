@@ -11,14 +11,14 @@ namespace Messages.API.Models
         public string UserId { get; set; }
         public string RoomId { get; set; }
         public string Content { get; set; }
-        //public string DateTime { get; set; }
+        public DateTime DateTime { get; set; }
 
         public WebMessage(IMessage m)
         {
             UserId = m.UserId;
             RoomId = m.RoomId;
             Content = m.Content;
-            //DateTime = m.DateTime;
+            DateTime = m.DateTime;
         }
     }
 

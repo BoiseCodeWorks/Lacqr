@@ -24,24 +24,24 @@ namespace Messages.Data.Repositories
             {
                 string Id = Guid.NewGuid().ToString();
                 int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO messages(Id, UserId, Content, RoomId)
-                VALUES(@Id, @UserId, @Content, @RoomId);
+                INSERT INTO messages(Id, UserId, Content, RoomId, DateTime)
+                VALUES(@Id, @UserId, @Content, @RoomId, @DateTime);
                 SELECT LAST_INSERT_ID();
-                ", new
+                ", new //add datetime to this search query
                 {
                     Id,
                     m.UserId,
                     m.Content,
-                    m.RoomId
-                    //m.DateTime
+                    m.RoomId,
+                    m.DateTime
                 });
                 return new Message()
                 {
                     Id = Id,
                     UserId = m.UserId,
                     Content = m.Content,
-                    RoomId = m.RoomId
-                    //DateTime = m.DateTime
+                    RoomId = m.RoomId,
+                    DateTime = m.DateTime
                 };
             }
             catch (MySqlException e)
@@ -52,16 +52,27 @@ namespace Messages.Data.Repositories
 
         internal string Delete(string id)
         {
-            var deleteMessage = _db.Execute(@"DELETE FROM messages WHERE Id = id", new {id});
+            var deleteMessage = _db.Execute(@"
+                DELETE FROM messages 
+                WHERE Id = id
+                ", new
+            {
+                id
+            });
+
             return deleteMessage > 0 ? "Succesfully deleted message" : "Nothing Deleted";
         }
 
         //TODO Date time search and order
         internal List<IMessage> GetMessages()
         {
-            var getMessages = _db.Query<Message>($@"SELECT * FROM messages "); //orderby DateTime 
-            List <IMessage> messages = new List<IMessage>();
-            foreach(var m in getMessages)
+            var getMessages = _db.Query<Message>($@"
+                SELECT * FROM messages 
+                ORDER BY DateTime
+                "); 
+            
+            List<IMessage> messages = new List<IMessage>();
+            foreach (var m in getMessages)
             {
                 messages.Add(m);
             }
