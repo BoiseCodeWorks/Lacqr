@@ -24,10 +24,18 @@ namespace Messages.API.Services.Web
         {
             var rawMessages = _provider.GetMessages();
             List<IWebMessage> messages = new List<IWebMessage>();
-            foreach(var m in rawMessages) {
+            foreach (var m in rawMessages)
+            {
                 messages.Add(new WebMessage(m));
             }
             return messages;
+        }
+
+        public string Delete(string id)
+        {
+            var rawMessages = _provider.Delete(id);
+            
+            return rawMessages;
         }
     }
 }

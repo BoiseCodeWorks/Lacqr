@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Accounts.Data.Repositories
 {
-    internal class AccountsRepository : DbContext
+    internal sealed class AccountsRepository : DbContext
     {
         internal AccountsRepository(IDbConnection db) : base(db)
         {

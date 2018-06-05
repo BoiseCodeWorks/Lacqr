@@ -24,7 +24,6 @@ namespace Lacqr.Controllers
             _manager = m;
             _auth = a;
         }
-        // GET: api/Messages
         [HttpGet]
         public List<IWebMessage> Get()
         {
@@ -62,11 +61,14 @@ namespace Lacqr.Controllers
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
+        [Authorize]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public string Delete(string id)
         {
+            return _manager.Delete(id);
+
         }
     }
 }

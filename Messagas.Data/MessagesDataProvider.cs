@@ -22,5 +22,10 @@ namespace Messages.Data
         {
             return _repo.GetMessages();
         }
+
+        public string Delete(string id)
+        {
+            return _repo.Delete(id);
+        }
     }
 }

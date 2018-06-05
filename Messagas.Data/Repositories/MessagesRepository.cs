@@ -3,6 +3,7 @@ using Messages.Data.Interfaces;
 using Messages.Data.Model;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 
@@ -46,10 +47,16 @@ namespace Messages.Data.Repositories
             }
         }
 
+        internal string Delete(string id)
+        {
+            var deleteMessage = _db.Execute(@"DELETE FROM messages WHERE Id = id", new {id});
+            return deleteMessage > 0 ? "Succesfully deleted message" : "Nothing Deleted";
+        }
+
         internal List<IMessage> GetMessages()
         {
-            var rawMessages = _db.Query<List>($@"SELECT * FROM messages");
-            List < IMessage > messages = new List<IMessage>();
+            var rawMessages = _db.Query<Message>($@"SELECT * FROM messages");
+            List <IMessage> messages = new List<IMessage>();
             foreach(var m in rawMessages)
             {
                 messages.Add(m);

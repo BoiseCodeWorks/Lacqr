@@ -8,7 +8,7 @@ namespace Accounts.API.Services.Web
 {
     public class AccountsManagerWeb : AccountsManager<IWebUser>
     {
-        public AccountsManagerWeb() : base("host=192.168.0.9;port=3306;database=burgershack;user id=student;password=student")
+        public AccountsManagerWeb() : base("host=192.168.0.9;port=3306;database=lacqr;user id=student;password=student")
         { }
 
         public override IWebUser Register(IAccountRegistration creds)
