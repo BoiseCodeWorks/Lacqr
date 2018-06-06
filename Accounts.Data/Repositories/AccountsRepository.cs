@@ -75,6 +75,10 @@ namespace Accounts.Data.Repositories
             Account account = _db.QueryFirstOrDefault<Account>(@"
             SELECT * FROM users WHERE id = @id
             ", new { id });
+            if(account == null)
+            {
+                return null;
+            }
             return account.GetUser();
         }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Accounts.API.Models.Web;
 using Accounts.API.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace Accounts.API.Services.Web
 {
@@ -37,6 +38,16 @@ namespace Accounts.API.Services.Web
             if (user == null) { throw new Exception("Not Authorized"); }
             user.SetClaims();
             return user;
+        }
+
+        public IEnumerable<IChannelUser> GetSubscribers(IEnumerable<string> subscribers)
+        {
+            var subs = new List<IChannelUser>();
+            foreach(var id in subscribers)
+            {
+                subs.Add(_provider.GetUserById(id));
+            }
+            return subs;
         }
     }
 }

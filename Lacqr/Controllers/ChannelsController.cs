@@ -3,6 +3,8 @@ using Accounts.API.Services.Web;
 using Channels.API.Models;
 using Channels.API.Services;
 using Channels.Data.Interfaces;
+using Lacqr.Interfaces;
+using Lacqr.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,10 +34,14 @@ namespace Lacqr.Controllers
         }
 
         [HttpGet("{id}")]
-        public IChannel GetChannel(string id)
+        public IChannelDetails GetChannel(string id)
         {
             var userId = _am.Authenticate(HttpContext).Id;
-            return _cm.GetChannel(new Subscriber(id, userId));
+
+            var channel = _cm.GetChannel(new Subscriber(id, userId));
+            var subscribers = _am.GetSubscribers(channel.Subscribers);
+
+            return new ChannelDetail(channel, subscribers);
         }
 
         [HttpPost]

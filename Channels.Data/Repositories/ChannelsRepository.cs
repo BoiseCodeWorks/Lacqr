@@ -46,12 +46,15 @@ namespace Channels.Data.Repositories
 
         internal IChannel GetChannel(ISubscriber sub)
         {
-            return _db.ExecuteScalar<Channel>(@"
+            var userIds = _db.Query<string>(@"SELECT userId FROM channelsubscribers WHERE channelId = @SubscribableId;", sub);
+            var channel = _db.QueryFirstOrDefault<Channel>(@"
             SELECT * FROM ChannelSubscribers cs JOIN Channels c
-            ON c.channelId = cs.channelId
+            ON c.id = cs.channelId
             WHERE cs.userId = @UserId
             AND cs.channelId = @SubscribableId
             ", sub);
+            channel.Subscribers = userIds;
+            return channel;
         }
 
         internal IEnumerable<IChannel> GetSubscribedChannels(string userId)

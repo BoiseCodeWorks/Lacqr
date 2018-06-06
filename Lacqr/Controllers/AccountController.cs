@@ -20,6 +20,26 @@ namespace Lacqr.Controllers
             _manager = m;
         }
 
+        [HttpGet]
+        public IActionResult UserDetails()
+        {
+            var x = _manager.Authenticate(HttpContext);
+            return View(x);
+        }
+
+        [HttpGet("register")]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpGet("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
         [HttpPost("register")]
         public async Task<IWebUser> Register([FromBody]AccountRegistration creds)
         {

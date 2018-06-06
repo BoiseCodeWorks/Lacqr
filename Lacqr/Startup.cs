@@ -50,6 +50,7 @@ namespace Lacqr
             services.AddTransient<AccountsManagerWeb>();
             services.AddTransient<MessagesManagerWeb>();
             services.AddTransient<ChannelsManager>();
+
             services.AddMvc();
         }
 
