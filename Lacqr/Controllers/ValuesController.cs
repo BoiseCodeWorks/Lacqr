@@ -9,10 +9,10 @@ namespace Lacqr.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        [HttpGet("{randoString}/XZ")]
-        public IActionResult XZ(string randoString)
+        [HttpGet]
+        public string Get()
         {
-            return View();
+            return "hello";
         }
     }
 }

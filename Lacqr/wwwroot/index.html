@@ -34,14 +34,26 @@
                 console.log("closed connection from " + uri);
             };
             socket.onmessage = function (event) {
-                appendItem(list, event.data);
-                console.log(event.data);
+                var message = JSON.parse(event.data)
+
+                switch (message.type) {
+                    case "BROADCASTMESSAGE":
+                        appendItem(list,`A user: ${message.content}`)
+                        break;
+                }
+
+
+                
+                console.log(event);
             };
             socket.onerror = function (event) {
                 console.log("error: " + event.data);
             };
         }
         connect();
+
+
+
         var list = document.getElementById("messages");
         var button = document.getElementById("sendButton");
         button.addEventListener("click", function () {
@@ -53,7 +65,7 @@
         });
         function sendMessage(message) {
             console.log("Sending: " + message);
-            socket.send(message);
+            socket.send(JSON.stringify({ type: 'BROADCASTMESSAGE', content: message }));
         }
         function appendItem(list, message) {
             var item = document.createElement("li");
