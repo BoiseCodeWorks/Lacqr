@@ -12,7 +12,7 @@ namespace Lacqr.Controllers
 {
     [Authorize]
     [Produces("application/json")]
-    [Route("api/Channels")]
+    [Route("api/[controller]")]
     public class ChannelsController : Controller
     {
 
@@ -66,7 +66,5 @@ namespace Lacqr.Controllers
             _cm.UnsubscribeFromChannel(sub);
             return "Success";
         }
-
-
     }
 }

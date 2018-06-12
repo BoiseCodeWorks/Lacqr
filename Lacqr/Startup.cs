@@ -1,6 +1,7 @@
 ﻿using Accounts.API.Services.Web;
 using Channels.API.Services;
 using GlobalExceptionHandler.WebApi;
+using Lacqr.Services.Sockets;
 using Messages.API.Services.Web;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -47,6 +48,9 @@ namespace Lacqr
                     .AllowCredentials();
                 });
             });
+
+            services.AddWebSocketManager();
+
             services.AddTransient<AccountsManagerWeb>();
             services.AddTransient<MessagesManagerWeb>();
             services.AddTransient<ChannelsManager>();
@@ -55,20 +59,22 @@ namespace Lacqr
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseCors("CorsDevPolicy");
             }
+            app.UseAuthentication();
+            app.UseWebSockets();
+            app.MapWebSocketManager("/general", provider.GetService<GeneralMessagesService>());
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseAuthentication();
 
-            
+
 
             app.UseExceptionHandler().WithConventions(o =>
             {
