@@ -22,14 +22,15 @@ namespace Accounts.Data.Repositories
             {
                 string Id = Guid.NewGuid().ToString();
                 int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO users (Id, Email, Password)
-                VALUES (@Id, @Email, @Password);
+                INSERT INTO users (Id, Email, Password, Username)
+                VALUES (@Id, @Email, @Password, @Username);
                 SELECT LAST_INSERT_ID();
             ", new
                 {
                     Id,
                     creds.Email,
-                    creds.Password
+                    creds.Password,
+                    creds.Username
                 });
 
                 return new User()

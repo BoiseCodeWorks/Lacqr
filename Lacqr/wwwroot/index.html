@@ -23,9 +23,44 @@
     <ul id="messages"></ul>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script>
+        let SERVER = axios.create({
+            baseURL: '/',
+            timeout: 5000,
+            withCredentials: true
+        })
+
+        function authenticate() {
+            SERVER.get('/account/authenticate').then(res => {
+                console.log(res)
+                if (res.data) {
+                    connectSocket(res.data);
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+        authenticate()
+    </script>
     <script language="javascript" type="text/javascript">
         var uri = "ws://" + window.location.host + "/general";
-        function connect() {
+
+        const CMDS = {
+            USERCONNECTED: 0
+        }
+
+        const APPS = {
+            giphy: {
+                processCommand(options) {
+                    $.get("https://api.giphy.com/v1/gifs/search?api_key=k4kRtYXvl5PGk878CZbGX99xOTyXiY3D&q=&limit=25&offset=0&rating=G&lang=en&q="+options).then(res => {
+                        appendItem(list, `<img src="${res.data[0].images.preview_gif.url}" />`)
+                    })
+                }
+            }
+        }
+
+        function connectSocket(user) {
             socket = new WebSocket(uri);
             socket.onopen = function (event) {
                 console.log("opened connection to " + uri);
@@ -34,26 +69,43 @@
                 console.log("closed connection from " + uri);
             };
             socket.onmessage = function (event) {
-                var message = JSON.parse(event.data)
-
+                var message
+                try {
+                    message = JSON.parse(event.data)
+                } catch (e) {
+                    console.error('[SOCKETMESSAGE] unable to parse message', e, event.data)
+                }
                 switch (message.type) {
+                    case "USERCONNECTED":
+                        appendItem(list, message.message)
+                        break;
                     case "BROADCASTMESSAGE":
-                        appendItem(list,`A user: ${message.content}`)
+                        appendItem(list, `${message.user.username}: ${message.content.content}`)
+                        break;
+                    case "COMMAND":
+                        message.content = JSON.parse(message.content.content)
+                        if (APPS[message.content.command]) {
+                            APPS[message.content.command].processCommand(message.content.options)
+                        }
                         break;
                 }
-
-
-                
                 console.log(event);
             };
             socket.onerror = function (event) {
                 console.log("error: " + event.data);
             };
+            socket.emit = function (type, payload) {
+                socket.send(JSON.stringify({
+                    type,
+                    user,
+                    content: {
+                        content: payload.message,
+                        userId: user.id,
+                        roomId: 'general'
+                    }
+                }))
+            }
         }
-        connect();
-
-
-
         var list = document.getElementById("messages");
         var button = document.getElementById("sendButton");
         button.addEventListener("click", function () {
@@ -65,11 +117,22 @@
         });
         function sendMessage(message) {
             console.log("Sending: " + message);
-            socket.send(JSON.stringify({ type: 'BROADCASTMESSAGE', content: message }));
+
+            if (message[0] == '/') {
+                return socket.emit('COMMAND', {
+                    message: JSON.stringify({
+                        command: message.slice(1, message.indexOf(' ')),
+                        options: message.slice(message.indexOf(' ') + 1, message.length)
+                    })
+                })
+            }
+
+            socket.emit('BROADCASTMESSAGE', { message })
         }
+
         function appendItem(list, message) {
             var item = document.createElement("li");
-            item.appendChild(document.createTextNode(message));
+            item.innerHTML = message;
             list.appendChild(item);
         }
 

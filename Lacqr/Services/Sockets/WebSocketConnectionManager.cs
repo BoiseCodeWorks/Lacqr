@@ -42,7 +42,7 @@ namespace Lacqr.Services.Sockets
 
         public WebSocketHandler(WebSocketConnectionManager manager) => WSManager = manager;
 
-        public virtual void OnConnected(WebSocket ws) => WSManager.AddSocket(ws);
+        public virtual void OnConnected(WebSocket ws, HttpContext context) => WSManager.AddSocket(ws);
 
         public virtual async Task OnDisconnected(WebSocket ws) => await WSManager.RemoveSocket(WSManager.GetId(ws));
 
@@ -98,7 +98,7 @@ namespace Lacqr.Services.Sockets
                 return;
 
             var socket = await context.WebSockets.AcceptWebSocketAsync();
-            _WSHandler.OnConnected(socket);
+            _WSHandler.OnConnected(socket, context);
 
             await Receive(socket, async (result, buffer) =>
             {

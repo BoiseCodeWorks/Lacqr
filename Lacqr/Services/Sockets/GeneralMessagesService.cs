@@ -1,6 +1,10 @@
-﻿using Messages.API.Services.Web;
+﻿using Accounts.API.Interfaces;
+using Accounts.API.Services.Web;
+using Messages.API.Services.Web;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
@@ -11,7 +15,15 @@ namespace Lacqr.Services.Sockets
     public class GeneralMessagesService : WebSocketHandler
     {
         private MessagesManagerWeb _mmw;
-        public GeneralMessagesService(WebSocketConnectionManager manager, MessagesManagerWeb mmw) : base(manager) { _mmw = mmw; }
+        private AccountsManagerWeb _am;
+        private IWebUser _user;
+
+        private ConcurrentDictionary<WebSocket, IWebUser> _userSocketManager = new ConcurrentDictionary<WebSocket, IWebUser>();
+
+        public GeneralMessagesService(WebSocketConnectionManager manager, AccountsManagerWeb am, MessagesManagerWeb mmw) : base(manager) {
+            _mmw = mmw;
+            _am = am;
+        }
 
         public async override Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
         {
@@ -22,7 +34,9 @@ namespace Lacqr.Services.Sockets
                 SocketMessage m = JsonConvert.DeserializeObject<SocketMessage>(message);
                 if (m != null)
                 {
-                    _mmw.Create(m.Content);
+                    _userSocketManager.TryGetValue(socket, out IWebUser user);
+                    m.Content.UserId = user.Id;
+                    //_mmw.Create(m.Content);
                     switch (m.Type)
                     {
                         case "BROADCASTMESSAGE":
@@ -31,8 +45,11 @@ namespace Lacqr.Services.Sockets
                         case "PRIVATEMESSAGE":
                             await SendMessageAsync(m.To, message);
                             break;
+                        case "COMMAND":
+                            await SendMessageToAllAsync(message);
+                            break;
                         default:
-                            await SendMessageAsync(socket, "bad request");
+                            await SendMessageAsync(socket, "{ \"error\": \"bad request\"}");
                             break;
                     }
                 }
@@ -43,17 +60,23 @@ namespace Lacqr.Services.Sockets
             }
         }
 
-        public override async void OnConnected(WebSocket socket)
-        {
-            base.OnConnected(socket);
 
+
+        public override async void OnConnected(WebSocket socket, HttpContext context)
+        {
+            var user = _am.Authenticate(context);
+            if (user == null) { socket.Abort(); return; }
+            base.OnConnected(socket, context);
+            _user = user;
+            _userSocketManager.TryAdd(socket, user);
             var socketId = WSManager.GetId(socket);
-            await SendMessageToAllAsync("{ \"type\": \"USERCONNECTED\", \"message\":\"" + socketId + "is now connected\"}");
+            await SendMessageToAllAsync("{ \"type\": \"USERCONNECTED\", \"message\":\"" + user.Email + " is now connected\"}");
         }
 
         public override async Task OnDisconnected(WebSocket socket)
         {
             var socketId = WSManager.GetId(socket);
+            _userSocketManager.Remove(socket, out IWebUser user);
             await base.OnDisconnected(socket);
             await SendMessageToAllAsync($"{socketId} has disconnected");
         }

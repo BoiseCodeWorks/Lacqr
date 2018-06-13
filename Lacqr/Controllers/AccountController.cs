@@ -74,7 +74,12 @@ namespace Lacqr.Controllers
         [HttpGet("authenticate")]
         public IWebUser Authenticate()
         {
-            return _manager.Authenticate(HttpContext);
+            var user =  _manager.Authenticate(HttpContext);
+            if (user != null)
+            {
+                return user;
+            }
+            return null;
         }
 
         private async Task<IWebUser> SetUserSession(IWebUser user)
