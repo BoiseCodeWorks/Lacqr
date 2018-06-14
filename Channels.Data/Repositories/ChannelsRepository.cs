@@ -69,6 +69,13 @@ namespace Channels.Data.Repositories
             });
         }
 
+        internal IEnumerable<IChannel> GetAllChannels()
+        {
+            return _db.Query<Channel>(@"
+            SELECT * FROM Channels
+            ");
+        }
+
         internal void Subscribe(ISubscriber subscriber)
         {
             string id = Guid.NewGuid().ToString();

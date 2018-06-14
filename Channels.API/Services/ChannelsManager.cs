@@ -21,6 +21,11 @@ namespace Channels.API.Services
             return _provider.GetSubscribedChannels(confirmedUserId);
         }
 
+        public IEnumerable<IChannel> GetAllChannels()
+        {
+            return _provider.GetAllChannels();
+        }
+
         public IChannel GetChannel(ISubscriber sub)
         {
             return _provider.GetChannel(sub);

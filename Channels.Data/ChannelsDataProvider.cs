@@ -25,6 +25,11 @@ namespace Channels.Data
             return _repo.GetChannel(sub);
         }
 
+        public IEnumerable<IChannel> GetAllChannels()
+        {
+            return _repo.GetAllChannels();
+        }
+
         public IEnumerable<IChannel> GetSubscribedChannels(string userId)
         {
             return _repo.GetSubscribedChannels(userId);

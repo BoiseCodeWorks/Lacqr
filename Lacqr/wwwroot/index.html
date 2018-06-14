@@ -50,7 +50,7 @@
             USERCONNECTED: 0
         }
 
-        const APPS = {
+        const LACQRINTEGRATIONAPPS = {
             giphy: {
                 processCommand(options) {
                     $.get("https://api.giphy.com/v1/gifs/search?api_key=k4kRtYXvl5PGk878CZbGX99xOTyXiY3D&q=&limit=25&offset=0&rating=G&lang=en&q="+options).then(res => {
