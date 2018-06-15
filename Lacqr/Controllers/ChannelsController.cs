@@ -59,6 +59,15 @@ namespace Lacqr.Controllers
             return "Success";
         }
 
+        [HttpPost("{id}/rooms")]
+        public string CreateChannelRoom(string id, [FromBody]NewRoom room)
+        {
+            room.OwnerId = _am.Authenticate(HttpContext).Id;
+            room.ChannelId = id;
+            _cm.CreateChannelRoom(room);
+            return "Successfully created Room";
+        }
+
         [HttpDelete("{id}/subscribe")]
         public string UnsubscribeChannel(string id)
         {

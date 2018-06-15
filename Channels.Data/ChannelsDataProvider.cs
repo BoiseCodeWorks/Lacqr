@@ -30,6 +30,11 @@ namespace Channels.Data
             return _repo.GetAllChannels();
         }
 
+        public IEnumerable<IChannelRoom> GetAllRooms()
+        {
+            return _repo.GetAllRooms();
+        }
+
         public IEnumerable<IChannel> GetSubscribedChannels(string userId)
         {
             return _repo.GetSubscribedChannels(userId);
@@ -45,6 +50,9 @@ namespace Channels.Data
             _repo.Unsubscribe(sub);
         }
 
-
+        public void CreateChannelRoom(INewRoom room)
+        {
+            _repo.CreateChannelRoom(room);
+        }
     }
 }

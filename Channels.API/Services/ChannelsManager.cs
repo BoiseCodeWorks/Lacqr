@@ -13,7 +13,7 @@ namespace Channels.API.Services
 
         public ChannelsManager()
         {
-            _provider = new ChannelsDataProvider("server=192.168.0.9;port=3306;database=lacqr;user id=student;password=student");
+            _provider = new ChannelsDataProvider("server=localhost;port=3306;database=lacqr;user id=student;password=student");
         }
 
         public IEnumerable<IChannel> GetSubscribedChannels(string confirmedUserId)
@@ -24,6 +24,11 @@ namespace Channels.API.Services
         public IEnumerable<IChannel> GetAllChannels()
         {
             return _provider.GetAllChannels();
+        }
+
+        public IEnumerable<IChannelRoom> GetAllRooms()
+        {
+            return _provider.GetAllRooms();
         }
 
         public IChannel GetChannel(ISubscriber sub)
@@ -44,6 +49,11 @@ namespace Channels.API.Services
         public void UnsubscribeFromChannel(Subscriber sub)
         {
             _provider.UnsubscribeFromChannel(sub);
+        }
+
+        public void CreateChannelRoom(INewRoom room)
+        {
+            _provider.CreateChannelRoom(room);
         }
     }
 }

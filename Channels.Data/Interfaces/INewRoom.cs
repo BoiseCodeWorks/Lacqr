@@ -8,5 +8,6 @@ namespace Channels.Data.Interfaces
     {
         string Name { get; set; }
         string OwnerId { get; set; }
+        string ChannelId { get; set; }
     }
 }

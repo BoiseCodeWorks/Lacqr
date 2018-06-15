@@ -76,6 +76,13 @@ namespace Channels.Data.Repositories
             ");
         }
 
+        internal IEnumerable<IChannelRoom> GetAllRooms()
+        {
+            return _db.Query<ChannelRoom>(@"
+            SELECT * FROM ChannelRooms
+            ");
+        }
+
         internal void Subscribe(ISubscriber subscriber)
         {
             string id = Guid.NewGuid().ToString();
@@ -99,7 +106,15 @@ namespace Channels.Data.Repositories
             ", subscriber);
         }
 
-
+        internal void CreateChannelRoom(INewRoom room)
+        {
+            var id = Guid.NewGuid().ToString();
+            _db.ExecuteScalar(@"
+             INSERT INTO ChannelRooms (Id, ChannelId, OwnerId, Name)
+             VALUES (@id, @channelId, @ownerId, @name)
+            ");
+            
+        }
 
     }
 }

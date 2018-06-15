@@ -71,6 +71,11 @@ namespace Lacqr.Services.Sockets
             }
         }
 
+        public virtual async Task SendMessageToRoomAsync(SocketRoom room, string message)
+        {
+            return;
+        }
+
         public string GetMessageFromByteArray(WebSocketReceiveResult result, byte[] buffer)
         {
             return Encoding.UTF8.GetString(buffer, 0, result.Count);

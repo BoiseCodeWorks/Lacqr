@@ -9,5 +9,6 @@ namespace Channels.API.Models
     {
         public string Name { get; set; }
         public string OwnerId { get; set; }
+        public string ChannelId { get; set; }
     }
 }

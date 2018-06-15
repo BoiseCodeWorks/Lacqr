@@ -30,9 +30,13 @@ namespace Lacqr.Services.Sockets
             _mmw = mmw;
             _am = am;
             _cm = cm;
-            foreach(var c in cm.GetAllChannels())
+            foreach (var c in cm.GetAllChannels())
             {
                 Channels.TryAdd(c.Id, new SocketChannel(c, _am));
+            }
+            foreach (var r in cm.GetAllRooms())
+            {
+                Rooms.TryAdd(r.Id, new SocketRoom(r, this, _am));
             }
         }
 
@@ -45,8 +49,8 @@ namespace Lacqr.Services.Sockets
                 SocketMessage m = JsonConvert.DeserializeObject<SocketMessage>(message);
                 if (m != null)
                 {
-                    AllConnectedUsers.TryGetValue(socket, out SocketUser user);
-                    m.Content.UserId = user.Id;
+                    AllConnectedUsers.TryGetValue(socket, out SocketUser socketUser);
+                    m.Content.UserId = socketUser.User.Id;
                     //_mmw.Create(m.Content);
                     switch (m.Type)
                     {
@@ -95,7 +99,7 @@ namespace Lacqr.Services.Sockets
         {
 
             AllConnectedUsers.TryRemove(socket, out SocketUser socketUser);
-            foreach(var c in socketUser.SubscribedChannels)
+            foreach (var c in socketUser.SubscribedChannels)
             {
                 Channels.TryGetValue(c.Id, out SocketChannel channel);
                 channel.LeaveChannel(socketUser);
@@ -105,19 +109,43 @@ namespace Lacqr.Services.Sockets
             //await SendMessageToAllAsync($"{socketId} has disconnected");
         }
 
+        public override async Task SendMessageToRoomAsync(SocketRoom room, string message)
+        {
+            foreach(var u in room.ConnectedUsers)
+            {
+                await SendMessageAsync(u.Socket, message);
+            }
+        }
     }
 
     public class SocketRoom
     {
+        private WebSocketHandler _handler;
+
         public IChannelRoom RoomData { get; set; }
         public IEnumerable<IChannelUser> Subscribers { get; set; }
         public IList<SocketUser> ConnectedUsers { get; set; }
 
-        public SocketRoom(IChannelRoom roomData, AccountsManagerWeb am)
+        public SocketRoom(IChannelRoom roomData, WebSocketHandler handler, AccountsManagerWeb am)
         {
             RoomData = roomData;
+            _handler = handler;
             Subscribers = am.GetSubscribers(roomData.Subscribers);
             ConnectedUsers = new List<SocketUser>();
+        }
+
+        private async Task OnConnected(SocketUser socketUser)
+        {
+            ConnectedUsers.Add(socketUser);
+            await _handler.SendMessageToRoomAsync(this,"{ \"type\": \"USERCONNECTED\", \"message\":\"" + socketUser.User.Username + " is now connected\"}");
+        }
+
+        public void JoinRoom(SocketUser socketUser)
+        {
+            if (RoomData.Subscribers.Contains(socketUser.User.Id))
+            {
+                OnConnected(socketUser);
+            }
         }
 
 
@@ -157,7 +185,7 @@ namespace Lacqr.Services.Sockets
         {
             if (ChannelData.Subscribers.Contains(socketUser.User.Id))
             {
-               ConnectedUsers.Add(socketUser);
+                ConnectedUsers.Add(socketUser);
             }
         }
 
